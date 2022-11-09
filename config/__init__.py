@@ -12,7 +12,7 @@ class ServerSettings(BaseSettings):
 
 
 class DatabaseSettings(BaseSettings):
-    DB_URL: str = 'mongodb+srv://dan10:password@sfcluster.qaaqyii.mongodb.net/?retryWrites=true&w=majority'
+    DB_URL: str = 'mongodb+srv://dan10:<password>@sfcluster.qaaqyii.mongodb.net/?retryWrites=true&w=majority'
     DB_NAME: str = "farm"
 
 

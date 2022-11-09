@@ -26,16 +26,32 @@ async def get_valve(valve_id: PydanticObjectId):
     return valve
 
 
-@valve_router.post('/{id}/open')
-async def open_valve(id: PydanticObjectId):
-    valve = await Valve.get(id)
-    valve.is_open = True
+@valve_router.patch('/{valve_id}/open')
+async def open_valve(valve_id: PydanticObjectId):
+    valve = await Valve.get(valve_id)
 
     if valve is None:
         raise HTTPException(
             status_code=404,
-            detail="Valve record not found!"
+            detail="Valve not found!"
         )
+
+    valve.is_open = True
+
+    return valve
+
+
+@valve_router.patch('/{valve_id}/close')
+async def close_valve(valve_id: PydanticObjectId):
+    valve = await Valve.get(valve_id)
+
+    if valve is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Valve not found!"
+        )
+
+    valve.is_open = False
 
     return valve
 

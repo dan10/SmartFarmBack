@@ -1,7 +1,9 @@
 import logging
 
 from beanie import PydanticObjectId
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Body
+from fastapi.responses import Response
+from starlette import status
 
 from model.Pump import Pump
 
@@ -28,7 +30,7 @@ async def get_pump(pump_id: PydanticObjectId) -> Pump:
     return pump
 
 
-@pump_router.post('/{pump_id}/open')
+@pump_router.patch('/{pump_id}/open')
 async def open_pump(pump_id: PydanticObjectId) -> bool:
     pump = await Pump.get(pump_id)
 
@@ -41,3 +43,24 @@ async def open_pump(pump_id: PydanticObjectId) -> bool:
     pump.is_open = True
 
     return pump.is_open
+
+
+@pump_router.patch('/{pump_id}/close')
+async def close_pump(pump_id: PydanticObjectId) -> bool:
+    pump = await Pump.get(pump_id)
+
+    if pump is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Pump not found!"
+        )
+
+    pump.is_open = False
+
+    return pump.is_open
+
+
+@pump_router.post("/")
+async def add_pump(pump: Pump = Body(...)):
+    insert = await pump.insert()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
