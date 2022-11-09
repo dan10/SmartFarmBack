@@ -2,7 +2,7 @@ from typing import Optional
 
 from beanie import Document
 
-from model import Routine
+from model.Routine import Routine
 
 
 class Pump(Document):
