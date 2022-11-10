@@ -10,4 +10,3 @@ class Plant(Document):
     description: Optional[str] = None
     image: Optional[str] = None
     irrigation_routine: Routine
-

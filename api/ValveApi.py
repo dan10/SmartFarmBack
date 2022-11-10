@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, Body
 from fastapi.responses import Response
 from starlette import status
 
-from model.Valve import Valve
+from model.Valve import Valve, TypeValve
 
 valve_router = APIRouter()
 
@@ -11,6 +11,16 @@ valve_router = APIRouter()
 @valve_router.get("/", response_model=list[Valve])
 async def get_valves():
     return await Valve.find_all().to_list()
+
+
+@valve_router.get("/irrigation", response_model=list[Valve])
+async def get_irrigation_valves():
+    return await Valve.find_all(Valve.type == TypeValve.IRRIGATION).to_list()
+
+
+@valve_router.get("/supply", response_model=list[Valve])
+async def get_irrigation_valves():
+    return await Valve.find_all(Valve.type == TypeValve.IRRIGATION).to_list()
 
 
 @valve_router.get('/{valve_id}', response_model=Valve)

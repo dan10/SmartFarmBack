@@ -1,5 +1,3 @@
-import logging
-
 from beanie import PydanticObjectId
 from fastapi import APIRouter, HTTPException, Body
 from fastapi.responses import Response
@@ -8,8 +6,6 @@ from starlette import status
 from model.Pump import Pump
 
 pump_router = APIRouter()
-
-log = logging.getLogger(__name__)
 
 
 @pump_router.get("/", response_model=list[Pump])
