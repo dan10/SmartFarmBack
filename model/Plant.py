@@ -1,7 +1,6 @@
 from typing import Optional
 
 from beanie import Document
-from fastapi.encoders import jsonable_encoder
 
 from model.Routine import Routine
 
